@@ -1,0 +1,25 @@
+import nltk
+from nltk import word_tokenize
+
+string = "MY STRING HERE"
+
+tokens = word_tokenize(string)
+text = nltk.Text(tokens)
+
+array =[]
+array2 =[]
+bgs = nltk.ngrams(tokens,2)
+fdist = nltk.FreqDist(bgs)
+for k,v in fdist.items():
+    if v >10:
+        array.append(k)
+        array2.append(v)
+        
+array1 = []
+for i in range(len(array)):
+    x = ' '.join(map(str,array[i]))
+    array1.append(x)
+    
+import pandas as pd
+df = pd.DataFrame({'phrase':array1,'count': array2}).sort_values(by="count",ascending=False)
+df.to_csv('2grams.csv')
